@@ -35,7 +35,7 @@ class Recipe
     private $cookingTime;
 
     /**
-     * @ORM\OneToMany(targetEntity=Step::class, mappedBy="recipe")
+     * @ORM\OneToMany(targetEntity=Step::class, mappedBy="recipe", cascade={"persist","remove"})
      */
     private $steps;
 
@@ -45,7 +45,7 @@ class Recipe
     private $comments;
 
     /**
-     * @ORM\OneToMany(targetEntity=IngredientQuantity::class, mappedBy="recipe")
+     * @ORM\OneToMany(targetEntity=IngredientQuantity::class, mappedBy="recipe", cascade={"persist","remove"})
      */
     private $ingredientQuantities;
 
@@ -241,5 +241,5 @@ class Recipe
     {
         return $this->name;
     }
-    
+
 }

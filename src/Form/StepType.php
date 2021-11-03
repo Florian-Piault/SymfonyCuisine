@@ -21,9 +21,6 @@ class StepType extends AbstractType
                 'empty_data' => 'Jane Doe'
             ])
             ->add('description', TextareaType::class)
-            ->add('recipe', EntityType::class,[
-                'class' => Recipe::class
-            ])
         ;
     }
 

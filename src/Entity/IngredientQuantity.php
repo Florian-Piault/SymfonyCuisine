@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\IngredientQuantityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -22,15 +24,21 @@ class IngredientQuantity
      */
     private $quantity;
 
-    /**
-     * @ORM\OneToOne(targetEntity=Ingredient::class, inversedBy="ingredientQuantity", cascade={"persist", "remove"})
-     */
-    private $ingredient;
 
     /**
      * @ORM\ManyToOne(targetEntity=Recipe::class, inversedBy="ingredientQuantities")
      */
     private $recipe;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Ingredient::class, mappedBy="ingredientQuantities")
+     */
+    private $ingredients;
+
+    public function __construct()
+    {
+        $this->ingredients = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -48,19 +56,7 @@ class IngredientQuantity
 
         return $this;
     }
-
-    public function getIngredient(): ?Ingredient
-    {
-        return $this->ingredient;
-    }
-
-    public function setIngredient(?Ingredient $ingredient): self
-    {
-        $this->ingredient = $ingredient;
-
-        return $this;
-    }
-
+    
     public function getRecipe(): ?Recipe
     {
         return $this->recipe;
@@ -75,7 +71,37 @@ class IngredientQuantity
 
     public function __toString()
     {
-        return $this->quantity+'_'+$this->recipe;
+        return $this->quantity;
+    }
+
+    /**
+     * @return Collection|Ingredient[]
+     */
+    public function getIngredients(): Collection
+    {
+        return $this->ingredients;
+    }
+
+    public function addIngredient(Ingredient $ingredient): self
+    {
+        if (!$this->ingredients->contains($ingredient)) {
+            $this->ingredients[] = $ingredient;
+            $ingredient->setIngredientQuantities($this);
+        }
+
+        return $this;
+    }
+
+    public function removeIngredient(Ingredient $ingredient): self
+    {
+        if ($this->ingredients->removeElement($ingredient)) {
+            // set the owning side to null (unless already changed)
+            if ($ingredient->getIngredientQuantities() === $this) {
+                $ingredient->setIngredientQuantities(null);
+            }
+        }
+
+        return $this;
     }
 
 }

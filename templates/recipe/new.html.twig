@@ -7,9 +7,7 @@
     function addFormToCollection(e) {
             console.log('coucoiu');
         const collectionHolder = document.querySelector('.ingredient-quantities');
-
         const item = document.createElement('li');
-
         item.innerHTML = collectionHolder
         .dataset
         .prototype
@@ -17,12 +15,22 @@
         /__name__/g,
         collectionHolder.dataset.index
         );
-
         collectionHolder.appendChild(item);
-
         collectionHolder.dataset.index++;
     }
-
+    function addStepsFromCollection(e) {
+    const collectionHolder = document.querySelector('.steps');
+    const item = document.createElement('li');
+    item.innerHTML = collectionHolder
+    .dataset
+    .prototype
+    .replace(
+    /__name__/g,
+    collectionHolder.dataset.index
+    );
+    collectionHolder.appendChild(item);
+    collectionHolder.dataset.index++;
+}
 
     console.log("coucou");
     </script>
@@ -34,7 +42,6 @@
 {{ form_row(form.name) }}
 {{ form_row(form.preparationTime) }}
 {{ form_row(form.cookingTime) }}
-
     <ul class="ingredient-quantities"
         data-index="{{ form.ingredientQuantities|length > 0 ? form.ingredientQuantities|last.vars.name + 1 : 0 }}"
         data-prototype="{{ form_widget(form.ingredientQuantities.vars.prototype)|e('html_attr') }}"
@@ -48,11 +55,19 @@
             onClick='addFormToCollection()'>Add a ingredient quantity
     </button>
 
-    {# <ul class="">
-        {% for ingredientQuantity in form.ingredientQuantities %}
-            <li>{{ form_row(ingredientQuantity.quantity) }}</li>
+<ul class="steps"
+        data-index="{{ form.steps|length > 0 ? form.steps|last.vars.name + 1 : 0 }}"
+        data-prototype="{{ form_widget(form.steps.vars.prototype)|e('html_attr') }}"
+    >
+        {% for step in form.steps %}
+            <li>{{ form_row(step.name) }}</li>
         {% endfor %}
-    </ul> #}
+    </ul>
+    <button type="button" class="add-ingredient-quantities"
+            data-collection-holder-class="ingredient-quantities"
+            onClick='addStepsFromCollection()'>Add a step
+    </button>
+
 {{ form_end(form) }}
     <a href="{{ path('recipe_index') }}">back to list</a>
 {% endblock %}

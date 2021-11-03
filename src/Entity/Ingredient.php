@@ -33,9 +33,11 @@ class Ingredient
     private $picture;
 
     /**
-     * @ORM\OneToOne(targetEntity=IngredientQuantity::class, mappedBy="ingredient", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=IngredientQuantity::class, inversedBy="ingredients")
      */
-    private $ingredientQuantity;
+    private $ingredientQuantities;
+
+  
 
     public function getId(): ?int
     {
@@ -74,34 +76,23 @@ class Ingredient
     public function setPicture($picture): self
     {
         $this->picture = $picture;
-
         return $this;
     }
-
-    public function getIngredientQuantity(): ?IngredientQuantity
-    {
-        return $this->ingredientQuantity;
-    }
-
-    public function setIngredientQuantity(?IngredientQuantity $ingredientQuantity): self
-    {
-        // unset the owning side of the relation if necessary
-        if ($ingredientQuantity === null && $this->ingredientQuantity !== null) {
-            $this->ingredientQuantity->setIngredient(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($ingredientQuantity !== null && $ingredientQuantity->getIngredient() !== $this) {
-            $ingredientQuantity->setIngredient($this);
-        }
-
-        $this->ingredientQuantity = $ingredientQuantity;
-
-        return $this;
-    }
-    
+        
     public function __toString()
     {
         return $this->name;
+    }
+
+    public function getIngredientQuantities(): ?IngredientQuantity
+    {
+        return $this->ingredientQuantities;
+    }
+
+    public function setIngredientQuantities(?IngredientQuantity $ingredientQuantities): self
+    {
+        $this->ingredientQuantities = $ingredientQuantities;
+
+        return $this;
     }
 }
