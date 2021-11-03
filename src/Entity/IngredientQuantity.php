@@ -72,4 +72,10 @@ class IngredientQuantity
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return $this->quantity+'_'+$this->recipe;
+    }
+
 }

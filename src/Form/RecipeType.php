@@ -2,12 +2,10 @@
 
 namespace App\Form;
 
-use App\Entity\Comment;
-use App\Entity\IngredientQuantity;
 use App\Entity\Recipe;
 use App\Entity\Step;
-use App\Entity\User;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Form\IngredientQuantityType;
+use App\Form\StepType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -23,8 +21,21 @@ class RecipeType extends AbstractType
             ->add('cookingTime')
             ->add('rating')
             // ->add('users', CollectionType::class, ['entry_type' => User::class])
-            ->add('steps', CollectionType::class, ['entry_type' => Step::class])
-            ->add('ingredientQuantities', CollectionType::class, ['entry_type' => IngredientQuantity::class])
+            // ->add('steps', CollectionType::class, [
+            //     'entry_type' => StepType::class,
+            //     'entry_options' => ['label' => false],
+            //     'allow_add' => true,
+            //     'allow_delete' => true,
+            //     ])
+            ->add('ingredientQuantities', CollectionType::class, [
+                'entry_type' => IngredientQuantityType::class,
+                'entry_options' => [
+                    'label' => false
+                ],
+                'allow_add' => true,
+                'allow_delete' => true,
+                'by_reference' => false
+                ])
             // ->add('comments', CollectionType::class, ['entry_type' => Comment::class])
         ;
     }
