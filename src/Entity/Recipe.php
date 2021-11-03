@@ -1,0 +1,189 @@
+<?php
+
+namespace App\Entity;
+
+use App\Repository\RecipeRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity(repositoryClass=RecipeRepository::class)
+ */
+class Recipe
+{
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
+    private $id;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $name;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $preparationTime;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $cookingTime;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Step::class, mappedBy="recipe")
+     */
+    private $steps;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="recipe")
+     */
+    private $comments;
+
+    /**
+     * @ORM\OneToMany(targetEntity=IngredientQuantity::class, mappedBy="recipe")
+     */
+    private $ingredientQuantities;
+
+    public function __construct()
+    {
+        $this->steps = new ArrayCollection();
+        $this->comments = new ArrayCollection();
+        $this->ingredientQuantities = new ArrayCollection();
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getPreparationTime(): ?int
+    {
+        return $this->preparationTime;
+    }
+
+    public function setPreparationTime(int $preparationTime): self
+    {
+        $this->preparationTime = $preparationTime;
+
+        return $this;
+    }
+
+    public function getCookingTime(): ?int
+    {
+        return $this->cookingTime;
+    }
+
+    public function setCookingTime(?int $cookingTime): self
+    {
+        $this->cookingTime = $cookingTime;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Step[]
+     */
+    public function getSteps(): Collection
+    {
+        return $this->steps;
+    }
+
+    public function addStep(Step $step): self
+    {
+        if (!$this->steps->contains($step)) {
+            $this->steps[] = $step;
+            $step->setRecipe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStep(Step $step): self
+    {
+        if ($this->steps->removeElement($step)) {
+            // set the owning side to null (unless already changed)
+            if ($step->getRecipe() === $this) {
+                $step->setRecipe(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setRecipe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getRecipe() === $this) {
+                $comment->setRecipe(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|IngredientQuantity[]
+     */
+    public function getIngredientQuantities(): Collection
+    {
+        return $this->ingredientQuantities;
+    }
+
+    public function addIngredientQuantity(IngredientQuantity $ingredientQuantity): self
+    {
+        if (!$this->ingredientQuantities->contains($ingredientQuantity)) {
+            $this->ingredientQuantities[] = $ingredientQuantity;
+            $ingredientQuantity->setRecipe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeIngredientQuantity(IngredientQuantity $ingredientQuantity): self
+    {
+        if ($this->ingredientQuantities->removeElement($ingredientQuantity)) {
+            // set the owning side to null (unless already changed)
+            if ($ingredientQuantity->getRecipe() === $this) {
+                $ingredientQuantity->setRecipe(null);
+            }
+        }
+
+        return $this;
+    }
+}
