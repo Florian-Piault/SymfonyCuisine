@@ -49,11 +49,22 @@ class Recipe
      */
     private $ingredientQuantities;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="favoriteRecipes")
+     */
+    private $users;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $rating;
+
     public function __construct()
     {
         $this->steps = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->ingredientQuantities = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -183,6 +194,45 @@ class Recipe
                 $ingredientQuantity->setRecipe(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+            $user->addFavoriteRecipe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->users->removeElement($user)) {
+            $user->removeFavoriteRecipe($this);
+        }
+
+        return $this;
+    }
+
+    public function getRating(): ?float
+    {
+        return $this->rating;
+    }
+
+    public function setRating(?float $rating): self
+    {
+        $this->rating = $rating;
 
         return $this;
     }
