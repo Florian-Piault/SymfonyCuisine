@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use App\Repository\IngredientQuantityRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -23,7 +22,6 @@ class IngredientQuantity
      * @ORM\Column(type="integer")
      */
     private $quantity;
-
 
     /**
      * @ORM\ManyToOne(targetEntity=Recipe::class, inversedBy="ingredientQuantities")
