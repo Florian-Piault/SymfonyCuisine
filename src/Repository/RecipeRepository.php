@@ -47,5 +47,4 @@ class RecipeRepository extends ServiceEntityRepository
         ;
     }
     */
-
 }

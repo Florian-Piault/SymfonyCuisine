@@ -47,4 +47,14 @@ class FavoriteRecipeRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function getFavoriteRecipesByUser(){
+        dd("coucou");
+        // return $this->createQueryBuilder('f')
+        //     ->andWhere('f.exampleField = :val')
+        //     ->setParameter('val', $value)
+        //     ->getQuery()
+        //     ->getOneOrNullResult()
+        // ;
+    }
 }
