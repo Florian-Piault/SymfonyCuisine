@@ -14,6 +14,12 @@
         {% endblock %}
     </head>
     <body>
+        <a href="{{ path('index')}}">Home</a>
+        <a href="{{ path('ingredient_index')}}">Ingredients</a>
+        <a href="{{ path('recipe_index')}}">Recipes</a>
+        <a href="{{ path('app_register')}}">Register</a>
+        <a href="{{ path('app_login')}}">Login</a>
+        <a href="{{ path('app_logout')}}">Logout</a>
         {% block body %}{% endblock %}
     </body>
 </html>
