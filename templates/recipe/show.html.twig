@@ -53,12 +53,28 @@
             <tr>
                 <th>Comments</th>
                 <td>
-                {% for comment in recipe.comments %}
-                    <li>
-                        {{comment.author}} - {{comment.createdAt | date("m/d/Y") }}: {{ comment.content }}
-                    </li>
-                {% endfor %}
-                </td>
+                    <ul class="comments">
+                    {% for comment in recipe.comments %}
+                        <li>
+                            <div class="flex-separator">
+                                <span class="header">{{comment.author}} - {{comment.createdAt | date("m/d/Y") }} </span>
+                                <span class="content">{{ comment.content }}</span>
+                            </div>
+                            {% if app.user.id == comment.author.id %}
+                            <div class="flex-separator btn-form">
+                               <form method="post" action="{{ path('comment_delete', {'id': comment.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ comment.id) }}">
+                                    <button class="btn">delete</button>
+                                </form>
+                                <form action="{{ path('comment_edit', {'id': comment.id}) }}">
+                                    <input type="submit" value="edit" />
+                                </form>
+                            </div>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                    </ul>
+                    </td>
             
             </tr>
 

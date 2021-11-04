@@ -88,6 +88,10 @@ class CommentController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('comment_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute(
+            'recipe_show', 
+            ['id' => $comment->getRecipe()->getId()], 
+            Response::HTTP_SEE_OTHER
+        );
     }
 }

@@ -7,5 +7,5 @@
 
     {{ include('comment/_form.html.twig') }}
 
-    <a href="{{ path('comment_index') }}">back to list</a>
+    <a href="{{ path('recipe_show', {'id': comment.recipe.id}) }}">back to recipe</a>
 {% endblock %}

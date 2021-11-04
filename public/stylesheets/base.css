@@ -6,3 +6,43 @@ header {
 .hidden {
   display: none;
 }
+
+ul.comments {
+  padding-inline-start: 0;
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  max-width: 50vw;
+}
+
+.comments > li {
+  display: flex;
+  flex-direction: row;
+  margin: 8px 0;
+  padding: 8px 0;
+}
+.comments > li:not(:last-child) {
+  border-bottom: 1px solid;
+}
+
+.header {
+  font-weight: bold;
+}
+
+.content {
+  margin-left: 16px;
+}
+
+.flex-separator {
+  display: flex;
+  flex-direction: column;
+  flex: 4;
+}
+
+.btn-form {
+  align-items: flex-end;
+  align-content: flex-end;
+  flex-direction: column;
+  justify-content: flex-end;
+  flex: 1;
+}
