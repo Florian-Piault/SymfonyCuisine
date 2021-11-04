@@ -6,6 +6,7 @@ use App\Entity\Rate;
 use App\Entity\Recipe;
 use App\Form\RateType;
 use App\Repository\RateRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -34,14 +35,14 @@ class RateController extends AbstractController
         $form->handleRequest($request);
         $rate->setRecipe($recipe);
         $rate->setUser($this->getUser());
-        
+
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($rate);
             $entityManager->flush();
 
             // return $this->redirectToRoute('rate_index', [], Response::HTTP_SEE_OTHER);
-            return $this->redirectToRoute('recipe_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('recipe_show', ['id' => $recipe->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('rate/new.html.twig', [

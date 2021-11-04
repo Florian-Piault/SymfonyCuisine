@@ -6,6 +6,7 @@ use App\Entity\Recipe;
 use App\Entity\Step;
 use App\Form\IngredientQuantityType;
 use App\Form\StepType;
+use App\Form\CommentType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -41,7 +42,7 @@ class RecipeType extends AbstractType
                 'allow_delete' => true,
                 'by_reference' => false
                 ])
-            ->add('comments', CollectionType::class, ['entry_type' => Comment::class])
+            ->add('comments', CollectionType::class, ['entry_type' => CommentType::class])
             -> add('save', SubmitType::class)
         ;
     }
