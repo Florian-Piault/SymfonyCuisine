@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class HomeController extends AbstractController {
     public function index() {
-        return $this->render('index.html.twig');
+        $user = $this->getUser();
+        return $this->render('index.html.twig', ['user' => $user]);
     }
 }
