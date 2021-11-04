@@ -5,10 +5,13 @@
 {% block body %}
     <h1>Cuisine</h1>
     <h1>Your Favorites Recipes</h1>
-    {% for favorite in user.favoriteRecipe %}
-        <li>{{ favorite.recipe.name}}</li>
-        <a href="{{ path('recipe_show', {'id': favorite.recipe.id}) }}">show the recipe</a>
-        <li>{{ favorite.recipe.id}}</li>
-    {% endfor %}
-    
+    {% if user is null %}
+        <p>Vous devez vous logger pour voir vos recettes favorites</p>
+    {% else %}
+        <ul>
+        {% for favorite in user.favoriteRecipe %}
+            <li><a href="{{ path('recipe_show', {'id': favorite.recipe.id}) }}">{{ favorite.recipe.name}}</a></li>
+        {% endfor %}
+        </ul>
+    {% endif %}
 {% endblock %}
