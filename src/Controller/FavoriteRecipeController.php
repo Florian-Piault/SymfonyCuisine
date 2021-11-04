@@ -38,19 +38,11 @@ class FavoriteRecipeController extends AbstractController
         $favoriteRecipe->setRecipe($recipe);
         $favoriteRecipe->setUser($user);
 
-
-        // if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
+        $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($favoriteRecipe);
             $entityManager->flush();
 
             return $this->redirectToRoute('recipe_show', ['id' => $recipeId], Response::HTTP_SEE_OTHER);
-        // }
-
-        // return $this->renderForm('favorite_recipe/new.html.twig', [
-        //     'favorite_recipe' => $favoriteRecipe,
-        //     'form' => $form,
-        // ]);
     }
 
     #[Route('/{id}', name: 'favorite_recipe_show', methods: ['GET'])]
