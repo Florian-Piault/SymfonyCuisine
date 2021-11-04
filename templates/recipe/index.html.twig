@@ -21,8 +21,8 @@
             <tr>
                 <td>{{ recipe.id }}</td>
                 <td>{{ recipe.name }}</td>
-                <td>{{ recipe.preparationTime }}</td>
-                <td>{{ recipe.cookingTime }}</td>
+                <td>{{ recipe.getTimeConverted(recipe.preparationTime) }}</td>
+                <td>{{ recipe.getTimeConverted(recipe.cookingTime) }}</td>
                 <td>{{ recipe.rating }}</td>
                 <td>
                     <a href="{{ path('recipe_show', {'id': recipe.id}) }}">show</a>

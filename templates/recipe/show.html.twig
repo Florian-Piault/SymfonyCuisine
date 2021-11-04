@@ -17,11 +17,11 @@
             </tr>
             <tr>
                 <th>PreparationTime</th>
-                <td>{{ recipe.preparationTime }}</td>
+                <td>{{ recipe.getTimeConverted(recipe.preparationTime) }}</td>
             </tr>
             <tr>
                 <th>CookingTime</th>
-                <td>{{ recipe.cookingTime }}</td>
+                <td>{{ recipe.getTimeConverted(recipe.cookingTime) }}</td>
             </tr>
             <tr>
                 <th>Rating</th>
