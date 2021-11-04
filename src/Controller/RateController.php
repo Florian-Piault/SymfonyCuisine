@@ -28,19 +28,20 @@ class RateController extends AbstractController
         $recipe = $this->getDoctrine()
                         ->getRepository(Recipe::class)
                         ->find($request->get('recipeId'));
-
+                        
         $rate = new Rate();
         $form = $this->createForm(RateType::class, $rate);
         $form->handleRequest($request);
         $rate->setRecipe($recipe);
         $rate->setUser($this->getUser());
-
+        
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($rate);
             $entityManager->flush();
 
-            return $this->redirectToRoute('rate_index', [], Response::HTTP_SEE_OTHER);
+            // return $this->redirectToRoute('rate_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('recipe_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('rate/new.html.twig', [

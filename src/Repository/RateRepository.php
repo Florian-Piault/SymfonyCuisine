@@ -47,4 +47,14 @@ class RateRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function findAverageRecipeRate($recipeId)
+    {
+        return $this->createQueryBuilder('r')
+                    ->select("avg(r.rating) as total")
+                    ->where('r.recipe = :idRecipe')
+                    ->setParameter('idRecipe', $recipeId)
+                    ->getQuery()
+                    ->getOneOrNullResult();
+    }
+
 }
