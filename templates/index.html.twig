@@ -4,5 +4,11 @@
 
 {% block body %}
     <h1>Cuisine</h1>
-
+    <h1>Your Favorites Recipes</h1>
+    {% for favorite in user.favoriteRecipe %}
+        <li>{{ favorite.recipe.name}}</li>
+        <a href="{{ path('recipe_show', {'id': favorite.recipe.id}) }}">show the recipe</a>
+        <li>{{ favorite.recipe.id}}</li>
+    {% endfor %}
+    
 {% endblock %}
