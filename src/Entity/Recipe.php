@@ -59,12 +59,18 @@ class Recipe
      */
     private $rating;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Rate::class, mappedBy="recipe")
+     */
+    private $rates;
+
     public function __construct()
     {
         $this->steps = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->ingredientQuantities = new ArrayCollection();
         $this->users = new ArrayCollection();
+        $this->rates = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -240,6 +246,36 @@ class Recipe
     public function __toString()
     {
         return $this->name;
+    }
+
+    /**
+     * @return Collection|Rate[]
+     */
+    public function getRates(): Collection
+    {
+        return $this->rates;
+    }
+
+    public function addRate(Rate $rate): self
+    {
+        if (!$this->rates->contains($rate)) {
+            $this->rates[] = $rate;
+            $rate->setRecipe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRate(Rate $rate): self
+    {
+        if ($this->rates->removeElement($rate)) {
+            // set the owning side to null (unless already changed)
+            if ($rate->getRecipe() === $this) {
+                $rate->setRecipe(null);
+            }
+        }
+
+        return $this;
     }
 
 }
