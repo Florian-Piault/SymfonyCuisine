@@ -29,7 +29,7 @@ class Rate
     private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Recipe::class, inversedBy="rates")
+     * @ORM\ManyToOne(targetEntity=Recipe::class, inversedBy="rates", cascade={"remove","persist"})
      */
     private $recipe;
 

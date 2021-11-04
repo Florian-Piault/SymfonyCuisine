@@ -33,7 +33,7 @@ class Ingredient
     private $picture;
 
     /**
-     * @ORM\ManyToOne(targetEntity=IngredientQuantity::class, inversedBy="ingredients")
+     * @ORM\ManyToOne(targetEntity=IngredientQuantity::class, inversedBy="ingredients", cascade={"persist","remove"})
      */
     private $ingredientQuantities;
 

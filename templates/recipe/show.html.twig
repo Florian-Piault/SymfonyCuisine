@@ -86,8 +86,8 @@
         </tbody>
     </table>
     <a href="{{ path('rate_new', {'recipeId' : recipe.id}) }}">add a rate</a>
-{% if is_granted('ROLE_USER') %}
     <a href="{{ path('recipe_index') }}">back to list</a>
+{% if is_granted('ROLE_USER') %}
     <a href="{{ path('recipe_edit', {'id': recipe.id}) }}">edit</a>
     <a href="{{ path('comment_new', {'id': recipe.id}) }}">comment</a>
     <a href="{{ path('favorite_recipe_new', {'id' : recipe.id}) }}">like</a>

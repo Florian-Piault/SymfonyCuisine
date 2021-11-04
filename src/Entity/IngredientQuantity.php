@@ -26,12 +26,12 @@ class IngredientQuantity
 
 
     /**
-     * @ORM\ManyToOne(targetEntity=Recipe::class, inversedBy="ingredientQuantities")
+     * @ORM\ManyToOne(targetEntity=Recipe::class, inversedBy="ingredientQuantities", cascade={"remove"})
      */
     private $recipe;
 
     /**
-     * @ORM\OneToMany(targetEntity=Ingredient::class, mappedBy="ingredientQuantities")
+     * @ORM\OneToMany(targetEntity=Ingredient::class, mappedBy="ingredientQuantities", cascade={"remove","persist"})
      */
     private $ingredients;
 
