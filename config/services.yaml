@@ -25,6 +25,8 @@ services:
     # App\Service\ApiService:
     #     arguments:
     #         $apiUrl : '%env(API_URL)%'
-
+    App\Service\FileUploader:
+        arguments:
+            $targetDirectory: '%pictures_directory%'
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

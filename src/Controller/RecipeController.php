@@ -6,14 +6,15 @@ use App\Entity\Recipe;
 use App\Form\RecipeType;
 use App\Repository\RateRepository;
 use App\Repository\RecipeRepository;
+use App\Service\FileUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
-use Exception;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 #[Route('/recipe')]
 
@@ -34,7 +35,7 @@ class RecipeController extends AbstractController
     }
 
     #[Route('/new', name: 'recipe_new', methods: ['GET','POST'])]
-    public function new(Request $request, SluggerInterface $slugger): Response
+    public function new(Request $request, SluggerInterface $slugger, FileUploader $fileUploader): Response
     {
         $recipe = new Recipe();
         $form = $this->createForm(RecipeType::class, $recipe);
@@ -45,18 +46,7 @@ class RecipeController extends AbstractController
             $pictureFile = $form->get('pictureUrl')->getData();
 
             if ($pictureFile){
-                $originalFilename = pathinfo($pictureFile->getClientOriginalName(), PATHINFO_FILENAME);
-                $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename.'-'.uniqid().'.'.$pictureFile->guessExtension();
-                try {
-                    $pictureFile->move(
-                        $this->getParameter('pictures_directory'),
-                        $newFilename
-                    );
-                $recipe->setPictureUrl($newFilename);
-                } catch (FileException $e) {
-                    throw new Exception('Error while uploading file',$e);
-                }
+                $pictureFileName = $fileUploader->upload($pictureFile);
             }
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($recipe);
