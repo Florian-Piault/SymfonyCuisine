@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}FavoriteRecipe{% endblock %}
+
+{% block body %}
+    <h1>FavoriteRecipe</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ favorite_recipe.id }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('favorite_recipe_index') }}">back to list</a>
+
+    <a href="{{ path('favorite_recipe_edit', {'id': favorite_recipe.id}) }}">edit</a>
+
+    {{ include('favorite_recipe/_delete_form.html.twig') }}
+{% endblock %}

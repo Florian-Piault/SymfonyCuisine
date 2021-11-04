@@ -64,6 +64,11 @@ class Recipe
      */
     private $rates;
 
+    /**
+     * @ORM\OneToMany(targetEntity=FavoriteRecipe::class, mappedBy="recipe")
+     */
+    private $favoriteRecipes;
+
     public function __construct()
     {
         $this->steps = new ArrayCollection();
@@ -71,6 +76,7 @@ class Recipe
         $this->ingredientQuantities = new ArrayCollection();
         $this->users = new ArrayCollection();
         $this->rates = new ArrayCollection();
+        $this->favoriteRecipes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -295,6 +301,36 @@ class Recipe
             // set the owning side to null (unless already changed)
             if ($rate->getRecipe() === $this) {
                 $rate->setRecipe(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|FavoriteRecipe[]
+     */
+    public function getFavoriteRecipes(): Collection
+    {
+        return $this->favoriteRecipes;
+    }
+
+    public function addFavoriteRecipe(FavoriteRecipe $favoriteRecipe): self
+    {
+        if (!$this->favoriteRecipes->contains($favoriteRecipe)) {
+            $this->favoriteRecipes[] = $favoriteRecipe;
+            $favoriteRecipe->setRecipe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFavoriteRecipe(FavoriteRecipe $favoriteRecipe): self
+    {
+        if ($this->favoriteRecipes->removeElement($favoriteRecipe)) {
+            // set the owning side to null (unless already changed)
+            if ($favoriteRecipe->getRecipe() === $this) {
+                $favoriteRecipe->setRecipe(null);
             }
         }
 

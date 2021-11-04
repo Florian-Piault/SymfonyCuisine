@@ -51,21 +51,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $comments;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Recipe::class, inversedBy="users")
-     */
-    private $favoriteRecipes;
-
-    /**
      * @ORM\OneToMany(targetEntity=Rate::class, mappedBy="user")
      */
     private $rates;
+
+    /**
+     * @ORM\OneToMany(targetEntity=FavoriteRecipe::class, mappedBy="user")
+     */
+    private $favoriteRecipe;
 
     public function __construct()
     {
         $this->roles = ['ROLE_USER'];
         $this->comments = new ArrayCollection();
-        $this->favoriteRecipes = new ArrayCollection();
         $this->rates = new ArrayCollection();
+        $this->favoriteRecipe = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -200,30 +200,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection|Recipe[]
-     */
-    public function getFavoriteRecipes(): Collection
-    {
-        return $this->favoriteRecipes;
-    }
-
-    public function addFavoriteRecipe(Recipe $favoriteRecipe): self
-    {
-        if (!$this->favoriteRecipes->contains($favoriteRecipe)) {
-            $this->favoriteRecipes[] = $favoriteRecipe;
-        }
-
-        return $this;
-    }
-
-    public function removeFavoriteRecipe(Recipe $favoriteRecipe): self
-    {
-        $this->favoriteRecipes->removeElement($favoriteRecipe);
-
-        return $this;
-    }
-
-    /**
      * @return Collection|Rate[]
      */
     public function getRates(): Collection
@@ -256,5 +232,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __toString(): string {
         if(isset($this->pseudo)) return $this->pseudo;
         return $this->email;
+    }
+
+    /**
+     * @return Collection|FavoriteRecipe[]
+     */
+    public function getFavoriteRecipe(): Collection
+    {
+        return $this->favoriteRecipe;
+    }
+
+    public function addFavoriteRecipe(FavoriteRecipe $favoriteRecipe): self
+    {
+        if (!$this->favoriteRecipe->contains($favoriteRecipe)) {
+            $this->favoriteRecipe[] = $favoriteRecipe;
+            $favoriteRecipe->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFavoriteRecipe(FavoriteRecipe $favoriteRecipe): self
+    {
+        if ($this->favoriteRecipe->removeElement($favoriteRecipe)) {
+            // set the owning side to null (unless already changed)
+            if ($favoriteRecipe->getUser() === $this) {
+                $favoriteRecipe->setUser(null);
+            }
+        }
+
+        return $this;
     }
 }

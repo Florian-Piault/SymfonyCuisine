@@ -22,7 +22,7 @@ class CommentController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'comment_new', methods: ['GET','POST'])]
+    #[Route('/new', name: 'comment_new', methods: ['POST'])]
     # createdAt / author
     public function new(Request $request): Response
     {
