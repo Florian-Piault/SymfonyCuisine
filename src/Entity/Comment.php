@@ -10,6 +10,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Comment
 {
+
+    function __construct(){
+
+        $this->createdAt = new \DatetimeImmutable('now');
+    }
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -88,5 +93,9 @@ class Comment
         $this->createdAt = $createdAt;
 
         return $this;
+    }
+
+    public function __toString(): string {
+        return $this->getContent();
     }
 }

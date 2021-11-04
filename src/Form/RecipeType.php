@@ -41,7 +41,7 @@ class RecipeType extends AbstractType
                 'allow_delete' => true,
                 'by_reference' => false
                 ])
-            // ->add('comments', CollectionType::class, ['entry_type' => Comment::class])
+            ->add('comments', CollectionType::class, ['entry_type' => Comment::class])
             -> add('save', SubmitType::class)
         ;
     }
