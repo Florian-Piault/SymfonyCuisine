@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 #[Route('/recipe/{recipeId}/rate')]
 class RateController extends AbstractController
@@ -23,6 +24,7 @@ class RateController extends AbstractController
     }
 
     #[Route('/new', name: 'rate_new', methods: ['GET','POST'])]
+    #[IsGranted('ROLE_USER')]
     public function new(Request $request): Response
     {
         $recipe = $this->getDoctrine()

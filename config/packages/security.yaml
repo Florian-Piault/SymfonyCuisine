@@ -37,4 +37,5 @@ security:
     access_control:
         - { path: ^/recipe/new, roles: ROLE_ADMIN }
         - { path: ^/ingredient/new, roles: ROLE_ADMIN }
+        # - { path: ^/rate/new, roles: ROLE_USER }
         # - { path: ^/profile, roles: ROLE_USER }

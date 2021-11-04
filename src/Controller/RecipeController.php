@@ -35,7 +35,7 @@ class RecipeController extends AbstractController
     }
 
     #[Route('/new', name: 'recipe_new', methods: ['GET','POST'])]
-    public function new(Request $request, SluggerInterface $slugger, FileUploader $fileUploader): Response
+    public function new(Request $request,FileUploader $fileUploader): Response
     {
         $recipe = new Recipe();
         $form = $this->createForm(RecipeType::class, $recipe);
@@ -47,6 +47,7 @@ class RecipeController extends AbstractController
 
             if ($pictureFile){
                 $pictureFileName = $fileUploader->upload($pictureFile);
+                $recipe->setPictureUrl($pictureFileName);
             }
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($recipe);

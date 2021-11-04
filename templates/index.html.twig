@@ -1,30 +1,57 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    {# <link type="text/css" rel="stylesheet" media="all" href="{{ 'stylesheets/base.css'}}" /> #}
+    {# {{ encore_entry_link_tags('app') }} #}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+{% endblock %}
+{% block javascripts %}
+    {# {{ encore_entry_script_tags('app') }} #}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+{% endblock %}
+
 {% block title %}Cuisine{% endblock %}
 
 {% block body %}
-    <h1>Cuisine</h1>
-    <h1>Your Favorites Recipes</h1>
-    {% if user is null %}
-        <p>Vous devez vous logger pour voir vos recettes favorites</p>
-    {% else %}
-        <ul>
-        {% for favorite in user.favoriteRecipe %}
-            <div class="card" style="width: 18rem;">
-                <div class="card-body">
-                    <h6 class="card-subtitle mb-2 text-muted">{{ favorite.recipe.name}}</h6>
-                    <p class="card-text">{{favorite.recipe.cookingTime}}</p>
-                    <p class="card-text">{{favorite.recipe.preparationTime}}</p>
+<main>
+     <section class="py-5 text-center container">
+    <div class="row py-lg-5">
+      <div class="col-lg-6 col-md-8 mx-auto">
+        <h1 class="fw-light">Cuisine</h1>
+        <p class="lead text-muted">Découvrez vos recettes de cuisines preferées</p>
+        <p>
+          <a href="{{ path('recipe_index')}}" class="btn btn-primary my-2">Discover all the recipes</a>
+          <a href="{{ path('ingredient_index')}}" class="btn btn-secondary my-2">Discover all the ingredients</a>
+        </p>
+      </div>
+    </div>
+    </section>
+
+    <div class="album py-5 bg-light">
+        <div class="container">
+            <h1>Your Favorites Recipes</h1>
+            {% if user is null %}
+                <p>Vous devez vous logger pour voir vos recettes favorites</p>
+            {% else %}
+                <ul>
+                {% for favorite in user.favoriteRecipe %}
+                    <li>{{ favorite.recipe.name}}</li>
                     <a href="{{ path('recipe_show', {'id': favorite.recipe.id}) }}" class="card-link">Show the recipe</a>
-                </div>
-            </div>
-        {% endfor %}
-        </ul>
-    {% endif %}
-    
-    {% for data in dataApi %}
-        <li>{{ data.genus }}</li>
-        <li>{{ data.name }}</li>
-        <li>{{ data.name }}</li>
-    {% endfor %}
+                {% endfor %}
+                </ul>
+            {% endif %}
+
+            <h3>Les fruits et légumes de votre enfance</h3>
+            <p>Saviez-vous qu'il existe plus de 300 fruits à travers le monde ?
+            Les fruits sont peu caloriques et contiennent les bons sucres. A consommer sans modération</p>
+            {% for data in dataApi %}
+            <ul>
+                <li>Nom: {{ data.name }}</li>
+                <li>Famille : {{ data.genus}}</li>
+                <li>Sucre(en g) : {{ data.nutritions.sugar}}</li>
+            </ul>
+            {% endfor %}
+        </div>
+    </div>
+</main>
 {% endblock %}

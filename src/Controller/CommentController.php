@@ -10,6 +10,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 #[Route('/comment')]
 class CommentController extends AbstractController
@@ -23,6 +25,7 @@ class CommentController extends AbstractController
     }
 
     #[Route('/new', name: 'comment_new', methods: ['POST'])]
+    #[IsGranted('ROLE_USER')]
     public function new(Request $request): Response
     {
         $comment = new Comment();
@@ -61,6 +64,7 @@ class CommentController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'comment_edit', methods: ['GET','POST'])]
+    #[Security("object.author == user" and "is_granted('ROLE_ADMIN')")]
     public function edit(Request $request, Comment $comment): Response
     {
         $form = $this->createForm(CommentType::class, $comment);
