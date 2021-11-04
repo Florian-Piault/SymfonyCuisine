@@ -48,12 +48,7 @@ class Recipe
      * @ORM\OneToMany(targetEntity=IngredientQuantity::class, mappedBy="recipe", cascade={"persist","remove"})
      */
     private $ingredientQuantities;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="favoriteRecipes")
-     */
-    private $users;
-
+    
     /**
      * @ORM\Column(type="float", nullable=true)
      */
@@ -233,33 +228,6 @@ class Recipe
             if ($ingredientQuantity->getRecipe() === $this) {
                 $ingredientQuantity->setRecipe(null);
             }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|User[]
-     */
-    public function getUsers(): Collection
-    {
-        return $this->users;
-    }
-
-    public function addUser(User $user): self
-    {
-        if (!$this->users->contains($user)) {
-            $this->users[] = $user;
-            $user->addFavoriteRecipe($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUser(User $user): self
-    {
-        if ($this->users->removeElement($user)) {
-            $user->removeFavoriteRecipe($this);
         }
 
         return $this;

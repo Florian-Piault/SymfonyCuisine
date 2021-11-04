@@ -8,11 +8,13 @@ use App\Form\IngredientQuantityType;
 use App\Form\StepType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
 
 class RecipeType extends AbstractType
 {
@@ -41,7 +43,22 @@ class RecipeType extends AbstractType
                 'allow_delete' => true,
                 'by_reference' => false
                 ])
-            ->add('comments', CollectionType::class, ['entry_type' => Comment::class])
+            ->add('comments', CollectionType::class, ['entry_type' => CommentType::class])
+            ->add('pictureUrl',FileType::class,[
+                'label' => 'Import your recipe picture',
+                'mapped' => false,
+                'required' => false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '1024k',
+                        'mimeTypes' => [
+                            'image/png',
+                            'image/jpeg',
+                        ],
+                        'mimeTypesMessage' => 'Please upload a valid PNG or JPEG image',
+                    ])
+                ],
+            ])
             -> add('save', SubmitType::class)
         ;
     }
