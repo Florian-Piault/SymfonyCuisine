@@ -37,8 +37,6 @@ class Ingredient
      */
     private $ingredientQuantities;
 
-  
-
     public function getId(): ?int
     {
         return $this->id;
@@ -95,4 +93,5 @@ class Ingredient
 
         return $this;
     }
+
 }

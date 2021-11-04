@@ -9,6 +9,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use App\Entity\Ingredient;
 use App\Entity\Recipe;
+use App\Form\IngredientType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class IngredientQuantityType extends AbstractType
 {
@@ -16,8 +18,19 @@ class IngredientQuantityType extends AbstractType
     {
         $builder
             ->add('quantity')
-            ->add('ingredient', EntityType::class,[
-                'class' => Ingredient::class
+            // ->add('ingredients', CollectionType::class, [
+            //     'entry_type' => IngredientType::class,
+            //     'entry_options' => [
+            //         'label' => false
+            //     ],
+            //     'allow_add' => true,
+            //     'allow_delete' => true,
+            //     'by_reference' => false
+            // ])
+            ->add('ingredients',EntityType::class,[
+                'class' => Ingredient::class,
+                'choice_label' => 'name',
+                'multiple' => true,
             ])
         ;
     }

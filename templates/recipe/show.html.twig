@@ -27,6 +27,26 @@
                 <th>Rating</th>
                 <td>{{ recipe.rating }}</td>
             </tr>
+            <tr>
+                <th>steps</th>
+                <td>
+                <ul>
+                {% for recipe in recipe.steps %}
+                    <li>{{ recipe.description }}</li>
+                {% endfor %}
+                </ul>
+ 
+                </td>
+            </tr>
+            <tr>
+                <th>Ingredients</th>
+                <td>
+                {% for ingredient in recipe.ingredientQuantities %}
+                    {{ ingredient.quantity }} {{ingredient.ingredients|first}}
+                {% endfor %}
+                </td>
+            </tr>
+
         </tbody>
     </table>
 

@@ -19,19 +19,31 @@
         collectionHolder.dataset.index++;
     }
     function addStepsFromCollection(e) {
-    const collectionHolder = document.querySelector('.steps');
-    const item = document.createElement('li');
-    item.innerHTML = collectionHolder
-    .dataset
-    .prototype
-    .replace(
-    /__name__/g,
-    collectionHolder.dataset.index
-    );
-    collectionHolder.appendChild(item);
-    collectionHolder.dataset.index++;
+        const collectionHolder = document.querySelector('.steps');
+        const item = document.createElement('li');
+        item.innerHTML = collectionHolder
+        .dataset
+        .prototype
+        .replace(
+        /__name__/g,
+        collectionHolder.dataset.index
+        );
+        collectionHolder.appendChild(item);
+        collectionHolder.dataset.index++;
 }
-
+    function addIngredientToCollection(e){
+        const collectionHolder = document.querySelector('.ingredients-items');
+        const item = document.createElement('li');
+        item.innerHTML = collectionHolder
+        .dataset
+        .prototype
+        .replace(
+        /__name__/g,
+        collectionHolder.dataset.index
+        );
+        collectionHolder.appendChild(item);
+        collectionHolder.dataset.index++;
+    }
     console.log("coucou");
     </script>
 {% endblock %}
