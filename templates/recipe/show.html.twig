@@ -27,8 +27,8 @@
                 <td>{{ recipe.cookingTime }}</td>
             </tr>
             <tr>
-                <th>Average Rating for this recipe</th>
-                <td>{{ averageRating|first }}</td>
+                <th>Average Rating</th>
+                <td>{{ averageRating|first|number_format(1, '.', ',')}}</td>
             </tr>
             <tr>
                 <th>steps</th>
