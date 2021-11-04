@@ -69,6 +69,11 @@ class Recipe
      */
     private $favoriteRecipes;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $pictureUrl;
+
     public function __construct()
     {
         $this->steps = new ArrayCollection();
@@ -333,6 +338,18 @@ class Recipe
                 $favoriteRecipe->setRecipe(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPictureUrl(): ?string
+    {
+        return $this->pictureUrl;
+    }
+
+    public function setPictureUrl(?string $pictureUrl): self
+    {
+        $this->pictureUrl = $pictureUrl;
 
         return $this;
     }

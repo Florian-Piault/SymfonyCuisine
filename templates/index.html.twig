@@ -10,8 +10,21 @@
     {% else %}
         <ul>
         {% for favorite in user.favoriteRecipe %}
-            <li><a href="{{ path('recipe_show', {'id': favorite.recipe.id}) }}">{{ favorite.recipe.name}}</a></li>
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h6 class="card-subtitle mb-2 text-muted">{{ favorite.recipe.name}}</h6>
+                    <p class="card-text">{{favorite.recipe.cookingTime}}</p>
+                    <p class="card-text">{{favorite.recipe.preparationTime}}</p>
+                    <a href="{{ path('recipe_show', {'id': favorite.recipe.id}) }}" class="card-link">Show the recipe</a>
+                </div>
+            </div>
         {% endfor %}
         </ul>
     {% endif %}
+    
+    {% for data in dataApi %}
+        <li>{{ data.genus }}</li>
+        <li>{{ data.name }}</li>
+        <li>{{ data.name }}</li>
+    {% endfor %}
 {% endblock %}
